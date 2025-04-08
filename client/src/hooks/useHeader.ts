@@ -55,6 +55,8 @@ const useHeader = () => {
     setUser(null);
     setIsDarkMode?.(false); // Reset Dark Mode
     setIsHighContrast?.(false); // Reset High Contrast
+    localStorage.removeItem('darkMode');
+    localStorage.removeItem('highContrast');
     navigate('/');
   };
 

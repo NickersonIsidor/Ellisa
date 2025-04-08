@@ -6,7 +6,6 @@ import {
   PhoneMultiFactorGenerator,
   GoogleAuthProvider,
   signInWithPopup,
-  RecaptchaVerifier,
   MultiFactorError,
 } from 'firebase/auth';
 import auth from '../firebase';

@@ -1,11 +1,19 @@
 // client/src/contexts/ThemeContext.tsx
-import React, { createContext, useState, useEffect, useContext, ReactNode } from 'react';
+import React, {
+  createContext,
+  useState,
+  useEffect,
+  useContext,
+  ReactNode,
+  useCallback,
+} from 'react';
 
 export interface ThemeContextType {
   isHighContrast: boolean;
   setIsHighContrast: React.Dispatch<React.SetStateAction<boolean>>;
   isDarkMode: boolean;
   setIsDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
+  applyUserPreferences: (darkMode: boolean, highContrast: boolean) => void; // New function
 }
 
 // Create the context with a default value
@@ -22,6 +30,11 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     const saved = localStorage.getItem('darkMode');
     return saved ? saved === 'true' : false;
   });
+
+  const applyUserPreferences = useCallback((darkMode: boolean, highContrast: boolean) => {
+    setIsDarkMode(darkMode);
+    setIsHighContrast(highContrast);
+  }, []);
 
   // Comprehensive dark mode and high contrast application
   useEffect(() => {
@@ -51,6 +64,7 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
       setIsHighContrast,
       isDarkMode,
       setIsDarkMode,
+      applyUserPreferences,
       forceApplyHighContrastStyles: () => {
         document.documentElement.classList.add('high-contrast-dark');
         document.body.classList.add('high-contrast-dark');
@@ -59,7 +73,7 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
 
     // Use type assertion to handle window property
     (window as Window & { __THEME_STATE__?: typeof themeState }).__THEME_STATE__ = themeState;
-  }, [isDarkMode, isHighContrast]);
+  }, [isDarkMode, isHighContrast, applyUserPreferences]);
 
   return (
     <ThemeContext.Provider
@@ -68,6 +82,7 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
         setIsHighContrast,
         isDarkMode,
         setIsDarkMode,
+        applyUserPreferences,
       }}>
       {children}
     </ThemeContext.Provider>

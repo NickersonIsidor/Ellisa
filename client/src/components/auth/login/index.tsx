@@ -8,8 +8,8 @@ import './index.css';
 
 declare global {
   interface Window {
-    recaptchaVerifier: RecaptchaVerifier;
-    recaptchaWidgetId: number;
+    recaptchaVerifier?: RecaptchaVerifier;
+    recaptchaWidgetId?: number;
   }
 }
 

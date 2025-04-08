@@ -30,7 +30,7 @@ const userSchema: Schema = new Schema(
       type: Boolean,
       default: false,
     },
-    highContrastMode: {
+    highContrast: {
       type: Boolean,
       default: false,
     },
