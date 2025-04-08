@@ -9,51 +9,66 @@ import VoteComponent from '../voteComponent';
 import CommentSection from '../commentSection';
 import useAnswerPage from '../../../hooks/useAnswerPage';
 
-/**
- * AnswerPage component that displays the full content of a question along with its answers.
- * It also includes the functionality to vote, ask a new question, and post a new answer.
- */
 const AnswerPage = () => {
   const { questionID, question, handleNewComment, handleNewAnswer } = useAnswerPage();
 
   if (!question) {
-    return null;
+    return (
+      <main role='main' aria-label='Loading Question' className='loading-state'>
+        Loading question...
+      </main>
+    );
   }
 
   return (
-    <>
-      <VoteComponent question={question} />
+    <main className='answer-page' role='main' aria-labelledby='question-title'>
+      <VoteComponent question={question} aria-label='Vote on this question' />
+
       <AnswerHeader ansCount={question.answers.length} title={question.title} />
-      <QuestionBody
-        views={question.views.length}
-        text={question.text}
-        askby={question.askedBy}
-        meta={getMetaData(new Date(question.askDateTime))}
-      />
-      <CommentSection
-        comments={question.comments}
-        handleAddComment={(comment: Comment) => handleNewComment(comment, 'question', questionID)}
-      />
-      {question.answers.map(a => (
-        <AnswerView
-          key={String(a._id)}
-          text={a.text}
-          ansBy={a.ansBy}
-          meta={getMetaData(new Date(a.ansDateTime))}
-          comments={a.comments}
-          handleAddComment={(comment: Comment) =>
-            handleNewComment(comment, 'answer', String(a._id))
-          }
+
+      <article className='question-details' aria-labelledby='question-body-heading'>
+        <QuestionBody
+          views={question.views.length}
+          text={question.text}
+          askby={question.askedBy}
+          meta={getMetaData(new Date(question.askDateTime))}
         />
-      ))}
+
+        <CommentSection
+          comments={question.comments}
+          handleAddComment={(comment: Comment) => handleNewComment(comment, 'question', questionID)}
+          aria-label='Comments on the question'
+        />
+      </article>
+
+      <section className='answers-section' aria-labelledby='answers-heading'>
+        <h2 id='answers-heading' className='sr-only'>
+          Answers to this Question
+        </h2>
+
+        {question.answers.map((a, index) => (
+          <AnswerView
+            key={String(a._id)}
+            text={a.text}
+            ansBy={a.ansBy}
+            meta={getMetaData(new Date(a.ansDateTime))}
+            comments={a.comments}
+            handleAddComment={(comment: Comment) =>
+              handleNewComment(comment, 'answer', String(a._id))
+            }
+            aria-posinset={index + 1}
+            aria-setsize={question.answers.length}
+          />
+        ))}
+      </section>
+
       <button
         className='bluebtn ansButton'
-        onClick={() => {
-          handleNewAnswer();
-        }}>
+        onClick={handleNewAnswer}
+        aria-label='Add a New Answer to this Question'>
         Answer Question
       </button>
-    </>
+    </main>
   );
 };
 

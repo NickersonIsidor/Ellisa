@@ -1,3 +1,4 @@
+// client/src/contexts/ThemeContext.tsx
 import React, { createContext, useState, useEffect, useContext, ReactNode } from 'react';
 
 export interface ThemeContextType {
@@ -11,9 +12,16 @@ export interface ThemeContextType {
 export const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  // Load initial values from localStorage or default to false
-  const [isHighContrast, setIsHighContrast] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  // Load initial values from localStorage with fallback to defaults
+  const [isHighContrast, setIsHighContrast] = useState(() => {
+    const saved = localStorage.getItem('highContrast');
+    return saved ? saved === 'true' : false;
+  });
+
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    const saved = localStorage.getItem('darkMode');
+    return saved ? saved === 'true' : false;
+  });
 
   // Comprehensive dark mode and high contrast application
   useEffect(() => {
@@ -33,9 +41,9 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
       document.body.classList.add('high-contrast');
     }
 
-    // Persist theme preferences
-    // localStorage.setItem('darkMode', isDarkMode.toString());
-    // localStorage.setItem('highContrast', isHighContrast.toString());
+    // Persist theme preferences in localStorage as backup
+    localStorage.setItem('darkMode', isDarkMode.toString());
+    localStorage.setItem('highContrast', isHighContrast.toString());
 
     // Make theme state available globally
     const themeState = {

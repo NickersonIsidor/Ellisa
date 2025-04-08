@@ -1,13 +1,21 @@
 import React from 'react';
 import axios from 'axios';
-import { useTheme } from '../../contexts/ThemeContext';
+import useThemeManagement from '../../hooks/useThemeManagement';
 import useProfileSettings from '../../hooks/useProfileSettings';
 import './index.css';
 import useLoginContext from '../../hooks/useLoginContext';
 
 const ProfileSettings = () => {
   // Use the theme context
-  const { isHighContrast, setIsHighContrast, isDarkMode, setIsDarkMode } = useTheme();
+  const {
+    isDarkMode,
+    isHighContrast,
+    isUpdating,
+    error: themeError,
+    success: themeSuccess,
+    updateThemePreferences,
+  } = useThemeManagement();
+
   const { user } = useLoginContext();
 
   const {
@@ -35,6 +43,14 @@ const ProfileSettings = () => {
     handleUpdateBiography,
     handleDeleteUser,
   } = useProfileSettings();
+
+  const handleDarkModeToggle = () => {
+    updateThemePreferences(!isDarkMode, isHighContrast);
+  };
+
+  const handleHighContrastToggle = () => {
+    updateThemePreferences(isDarkMode, !isHighContrast);
+  };
 
   if (loading) {
     return (
@@ -177,6 +193,10 @@ const ProfileSettings = () => {
         }}>
         <h3 style={{ marginTop: 0, marginBottom: '15px' }}>Display Settings</h3>
 
+        {isUpdating && <div className='status-message loading'>Updating preferences...</div>}
+        {themeError && <div className='status-message error'>{themeError}</div>}
+        {themeSuccess && <div className='status-message success'>{themeSuccess}</div>}
+
         {/* Dark Mode Toggle */}
         <div
           style={{
@@ -198,19 +218,9 @@ const ProfileSettings = () => {
             <input
               type='checkbox'
               checked={isDarkMode}
-              onChange={async () => {
-                const newValue = !isDarkMode;
-                setIsDarkMode(newValue);
-
-                if (user) {
-                  await axios.patch('/api/user/updatePreferences', {
-                    username: user.username,
-                    darkMode: newValue,
-                    highContrast: isHighContrast,
-                  });
-                }
-              }}
+              onChange={handleDarkModeToggle}
               style={{ marginLeft: 'auto', width: '20px', height: '20px' }}
+              disabled={isUpdating}
             />
           </label>
         </div>
@@ -235,19 +245,9 @@ const ProfileSettings = () => {
             <input
               type='checkbox'
               checked={isHighContrast}
-              onChange={async () => {
-                const newValue = !isHighContrast;
-                setIsHighContrast(newValue);
-
-                if (user) {
-                  await axios.patch('/api/user/updatePreferences', {
-                    username: user.username,
-                    darkMode: isDarkMode,
-                    highContrast: newValue,
-                  });
-                }
-              }}
+              onChange={handleHighContrastToggle}
               style={{ marginLeft: 'auto', width: '20px', height: '20px' }}
+              disabled={isUpdating}
             />
           </label>
         </div>

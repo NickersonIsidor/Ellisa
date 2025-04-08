@@ -136,3 +136,46 @@
   .toggle-password-button:hover {
     background-color: #bbb;
   }
+
+.status-message {
+  padding: 8px 12px;
+  margin-bottom: 15px;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.status-message.loading {
+  background-color: #e2f0ff;
+  color: #0066cc;
+  border: 1px solid #99ccff;
+}
+
+.status-message.error {
+  background-color: #ffebee;
+  color: #c62828;
+  border: 1px solid #ffcdd2;
+}
+
+.status-message.success {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  border: 1px solid #a5d6a7;
+}
+
+.dark-mode .status-message.loading {
+  background-color: #0d3b66;
+  color: #99ccff;
+  border: 1px solid #0066cc;
+}
+
+.dark-mode .status-message.error {
+  background-color: #4a0d0d;
+  color: #ff8a80;
+  border: 1px solid #c62828;
+}
+
+.dark-mode .status-message.success {
+  background-color: #1b4d2e;
+  color: #a5d6a7;
+  border: 1px solid #2e7d32;
+}

@@ -14,12 +14,13 @@ import {
  * @param {User} user - The user object to be saved, containing user details like username, password, etc.
  * @returns {Promise<UserResponse>} - Resolves with the saved user object (without the password) or an error message.
  */
+// server/services/user.service.ts
 export const saveUser = async (user: User): Promise<UserResponse> => {
   try {
     const result: DatabaseUser = await UserModel.create({
       ...user,
-      isDarkMode: user.darkMode ?? false,
-      isHighContrast: user.highContrast ?? false,
+      darkMode: user.darkMode ?? false,
+      highContrast: user.highContrast ?? false,
     });
 
     if (!result) {
@@ -110,7 +111,7 @@ export const loginUser = async (loginCredentials: UserCredentials): Promise<User
       highContrast: user.highContrast,
     };
 
-    return safeUser; // MAYBE JUST RETURN USER
+    return safeUser;
   } catch (error) {
     return { error: `Error occurred when authenticating user: ${error}` };
   }

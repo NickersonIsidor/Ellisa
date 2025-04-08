@@ -26,11 +26,11 @@ const userSchema: Schema = new Schema(
       type: String,
       default: '',
     },
-    isDarkMode: {
+    darkMode: {
       type: Boolean,
       default: false,
     },
-    isHighContrast: {
+    highContrastMode: {
       type: Boolean,
       default: false,
     },

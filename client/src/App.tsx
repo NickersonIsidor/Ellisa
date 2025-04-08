@@ -1,13 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Box } from '@chakra-ui/react';
 import { Routes, Route } from 'react-router-dom';
 import { ThemeProvider, useTheme } from './contexts/ThemeContext';
 import FakeStackOverflow from './components/fakestackoverflow';
 import HighContrastToggle from './components/HighContrastToggle';
+import useLoginContext from './hooks/useLoginContext';
 
 // Component that uses the theme context for the controls
 const ThemeControls = () => {
   const { isDarkMode, setIsDarkMode, isHighContrast, setIsHighContrast } = useTheme();
+  const { user } = useLoginContext();
+
+  // Initialize theme from user preferences when component mounts
+  useEffect(() => {
+    if (user) {
+      setIsDarkMode(user.darkMode ?? false);
+      setIsHighContrast(user.highContrast ?? false);
+    }
+  }, [user, setIsDarkMode, setIsHighContrast]);
 
   // Handle dark mode toggle with direct styles application
   const handleDarkModeToggle = () => {

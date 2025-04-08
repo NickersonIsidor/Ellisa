@@ -5,13 +5,16 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import './index.css';
 import { io } from 'socket.io-client';
 import FakeStackOverflow from './components/fakestackoverflow';
-import { FakeSOSocket } from './types/types';
-import { ThemeProvider } from './contexts/ThemeContext'; // ✅ Import your ThemeProvider
+import { FakeSOSocket, SafeDatabaseUser } from './types/types';
+import { ThemeProvider, useTheme } from './contexts/ThemeContext';
+import LoginContext from './contexts/LoginContext';
 
 const container = document.getElementById('root');
 
 const App = () => {
   const [socket, setSocket] = useState<FakeSOSocket | null>(null);
+  const [user, setUser] = useState<SafeDatabaseUser | null>(null);
+  const { setIsDarkMode, setIsHighContrast } = useTheme();
   const serverURL = process.env.REACT_APP_SERVER_URL;
 
   if (!serverURL) {
@@ -28,9 +31,22 @@ const App = () => {
     };
   }, [socket, serverURL]);
 
+  const handleUserLogin = (userData: SafeDatabaseUser | null) => {
+    setUser(userData);
+    if (userData) {
+      setIsDarkMode(userData.darkMode ?? false);
+      setIsHighContrast(userData.highContrast ?? false);
+    } else {
+      setIsDarkMode(false);
+      setIsHighContrast(false);
+    }
+  };
+
   return (
     <Router>
-      <FakeStackOverflow socket={socket} />
+      <LoginContext.Provider value={{ setUser: handleUserLogin, user }}>
+        <FakeStackOverflow socket={socket} />
+      </LoginContext.Provider>
     </Router>
   );
 };
@@ -40,8 +56,6 @@ if (container) {
   root.render(
     <React.StrictMode>
       <ThemeProvider>
-        {' '}
-        {/* Wrap ChakraProvider with ThemeProvider */}
         <ChakraProvider value={defaultSystem}>
           <App />
         </ChakraProvider>

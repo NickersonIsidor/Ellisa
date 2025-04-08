@@ -12,6 +12,7 @@ import {
 import auth from '../firebase';
 import useLoginContext from './useLoginContext';
 import { createUser, loginUser } from '../services/userService';
+import { useTheme } from '../contexts/ThemeContext';
 
 /**
  * Custom hook to manage authentication logic, including handling input changes,
@@ -37,6 +38,7 @@ const useAuth = (authType: 'login' | 'signup') => {
   const [err, setErr] = useState<string>('');
   const { setUser } = useLoginContext();
   const navigate = useNavigate();
+  const { setIsDarkMode, setIsHighContrast } = useTheme();
 
   /**
    * Toggles the visibility of the password input field.
@@ -192,6 +194,8 @@ const useAuth = (authType: 'login' | 'signup') => {
             user = await createUser({ username: email, password: passwordToUse });
           }
 
+          setIsDarkMode(user.darkMode ?? false);
+          setIsHighContrast(user.highContrast ?? false);
           setUser(user);
           navigate('/home');
         } catch (mfaError) {

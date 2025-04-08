@@ -4,26 +4,37 @@ import TagView from './tag';
 import useTagPage from '../../../hooks/useTagPage';
 import AskQuestionButton from '../askQuestionButton';
 
-/**
- * Represents the TagPage component which displays a list of tags
- * and provides functionality to handle tag clicks and ask a new question.
- */
 const TagPage = () => {
   const { tlist, clickTag } = useTagPage();
 
   return (
-    <>
+    <main className='tag-page' role='main' aria-labelledby='tags-heading'>
       <div className='space_between right_padding'>
-        <div className='bold_title'>{tlist.length} Tags</div>
-        <div className='bold_title'>All Tags</div>
+        <h1 id='tags-heading' className='bold_title'>
+          {tlist.length} Tags
+        </h1>
+        <h2 className='bold_title'>All Tags</h2>
         <AskQuestionButton />
       </div>
-      <div className='tag_list right_padding'>
-        {tlist.map(t => (
-          <TagView key={t.name} t={t} clickTag={clickTag} />
+
+      <section className='tag_list right_padding' aria-label='List of Tags' aria-live='polite'>
+        {tlist.map((t, index) => (
+          <TagView
+            key={t.name}
+            t={t}
+            clickTag={clickTag}
+            aria-posinset={index + 1}
+            aria-setsize={tlist.length}
+          />
         ))}
-      </div>
-    </>
+      </section>
+
+      {(!tlist.length || tlist.length === 0) && (
+        <div className='bold_title right_padding no-results' role='alert' aria-live='assertive'>
+          No Tags Found
+        </div>
+      )}
+    </main>
   );
 };
 

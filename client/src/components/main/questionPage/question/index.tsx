@@ -5,61 +5,48 @@ import './index.css';
 import { getMetaData } from '../../../../tool';
 import { PopulatedDatabaseQuestion } from '../../../../types/types';
 
-/**
- * Interface representing the props for the Question component.
- *
- * q - The question object containing details about the question.
- */
 interface QuestionProps {
   question: PopulatedDatabaseQuestion;
 }
 
-/**
- * Question component renders the details of a question including its title, tags, author, answers, and views.
- * Clicking on the component triggers the handleAnswer function,
- * and clicking on a tag triggers the clickTag function.
- *
- * @param q - The question object containing question details.
- */
 const QuestionView = ({ question }: QuestionProps) => {
   const navigate = useNavigate();
 
-  /**
-   * Function to navigate to the home page with the specified tag as a search parameter.
-   *
-   * @param tagName - The name of the tag to be added to the search parameters.
-   */
   const clickTag = (tagName: string) => {
     const searchParams = new URLSearchParams();
     searchParams.set('tag', tagName);
-
     navigate(`/home?${searchParams.toString()}`);
   };
 
-  /**
-   * Function to navigate to the specified question page based on the question ID.
-   *
-   * @param questionID - The ID of the question to navigate to.
-   */
   const handleAnswer = (questionID: ObjectId) => {
     navigate(`/question/${questionID}`);
   };
 
   return (
-    <div
+    <article
       className='question right_padding'
       onClick={() => {
         if (question._id) {
           handleAnswer(question._id);
         }
-      }}>
-      <div className='postStats'>
-        <div>{question.answers.length || 0} answers</div>
-        <div>{question.views.length} views</div>
+      }}
+      role='article'
+      aria-labelledby={`question-title-${question._id}`}>
+      <div className='postStats' aria-label='Question Statistics'>
+        <div aria-label='Number of Answers' role='status'>
+          {question.answers.length || 0} answers
+        </div>
+        <div aria-label='Number of Views' role='status'>
+          {question.views.length} views
+        </div>
       </div>
+
       <div className='question_mid'>
-        <div className='postTitle'>{question.title}</div>
-        <div className='question_tags'>
+        <h2 id={`question-title-${question._id}`} className='postTitle'>
+          {question.title}
+        </h2>
+
+        <div className='question_tags' aria-label='Question Tags'>
           {question.tags.map(tag => (
             <button
               key={String(tag._id)}
@@ -67,18 +54,26 @@ const QuestionView = ({ question }: QuestionProps) => {
               onClick={e => {
                 e.stopPropagation();
                 clickTag(tag.name);
-              }}>
+              }}
+              aria-label={`Filter questions by tag: ${tag.name}`}>
               {tag.name}
             </button>
           ))}
         </div>
       </div>
-      <div className='lastActivity'>
-        <div className='question_author'>{question.askedBy}</div>
+
+      <div className='lastActivity' aria-label='Question Activity Details'>
+        <div className='question_author' aria-label={`Question asked by ${question.askedBy}`}>
+          {question.askedBy}
+        </div>
         <div>&nbsp;</div>
-        <div className='question_meta'>asked {getMetaData(new Date(question.askDateTime))}</div>
+        <div
+          className='question_meta'
+          aria-label={`Asked ${getMetaData(new Date(question.askDateTime))}`}>
+          asked {getMetaData(new Date(question.askDateTime))}
+        </div>
       </div>
-    </div>
+    </article>
   );
 };
 

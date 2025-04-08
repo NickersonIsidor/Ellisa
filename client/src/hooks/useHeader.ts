@@ -1,6 +1,7 @@
 import { ChangeEvent, useState, KeyboardEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useLoginContext from './useLoginContext';
+import { useTheme } from '../contexts/ThemeContext';
 
 /**
  * Custom hook to manage the state and logic for a header input field.
@@ -16,7 +17,8 @@ import useLoginContext from './useLoginContext';
  */
 const useHeader = () => {
   const navigate = useNavigate();
-  const { setUser, setIsDarkMode, setIsHighContrast } = useLoginContext();
+  const { setUser } = useLoginContext();
+  const { setIsDarkMode, setIsHighContrast } = useTheme();
 
   const [val, setVal] = useState<string>('');
 
