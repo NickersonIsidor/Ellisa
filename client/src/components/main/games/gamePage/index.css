@@ -1,0 +1,114 @@
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f8f9fa;
+  margin: 0;
+  padding: 0;
+}
+
+.game-page {
+  padding: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.game-header h1 {
+  font-size: 24px;
+  color: #333;
+}
+
+.game-status {
+  color: #666;
+  margin-left: 20px;
+}
+
+/* Button Spacing */
+.game-controls,
+.game-details {
+  margin-bottom: 15px;
+}
+
+button {
+  margin: 10px;
+  display: inline-block;
+}
+
+/* Button Specific Classes */
+.btn-create-game,
+.btn-leave-game,
+.btn-refresh-list,
+.btn-join-game {
+  background: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s ease;
+}
+
+.btn-create-game:hover,
+.btn-leave-game:hover,
+.btn-refresh-list:hover,
+.btn-join-game:hover {
+  background: #0056b3;
+}
+
+button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+/* Available Games List */
+.game-list {
+  margin-top: 15px;
+  border-top: 1px solid #ddd;
+  padding-top: 15px;
+}
+
+.game-items {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.game-item {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 15px;
+  background: #f9f9f9;
+}
+
+.game-item p {
+  margin: 5px 0;
+}
+
+.game-item ul {
+  list-style: none;
+  padding: 0;
+  margin: 5px 0;
+}
+
+.game-item li {
+  background: #eef2f3;
+  margin: 3px 0;
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
+.game-item button {
+  margin-top: 10px;
+  padding: 8px 16px;
+  font-size: 14px;
+}
+
+/* Error Message */
+.game-error {
+  color: red;
+  font-weight: bold;
+  margin-top: 15px;
+}

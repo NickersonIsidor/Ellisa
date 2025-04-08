@@ -1,0 +1,12 @@
+#user_search_bar {
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+    margin-top: auto;
+    height: 2rem;
+}
+
+.bold_title {
+  font-weight: bold;
+  white-space: nowrap;
+}

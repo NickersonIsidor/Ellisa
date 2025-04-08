@@ -1,0 +1,138 @@
+/* A top-level container that spans the full page width and height, 
+   using padding instead of forced vertical centering */
+   .page-container {
+    width: 100%;
+    min-height: 100vh;
+    background: #f7f7f7;
+    display: flex;
+    justify-content: center; /* horizontally center the card */
+    padding: 40px 0;         /* top & bottom spacing */
+    box-sizing: border-box;
+  }
+  
+  /* A card-like container that holds the actual profile content */
+  .profile-card {
+    width: 100%;
+    max-width: 600px;        /* limit the card width */
+    max-height: 700px;       
+    overflow-y: auto;
+    background: #fff;        /* white background */
+    border-radius: 5px;      /* slight rounding on edges */
+    padding: 30px;           /* internal padding */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* subtle shadow */
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  /* A clear section for the main heading */
+  .profile-card h2 {
+    margin-bottom: 20px;
+    font-size: 26px;
+    font-weight: bold;
+    color: #333;
+    text-align: left;        /* left-align the headings */
+  }
+  
+  /* Subheadings for each section (General Info, Reset Password, Danger Zone) */
+  .profile-card h4 {
+    margin-top: 24px;
+    margin-bottom: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #555;
+    text-align: left;
+  }
+  
+  /* Basic paragraph styling */
+  .profile-card p {
+    margin-bottom: 10px;
+    font-size: 15px;
+    line-height: 1.4;
+    color: #666;
+    text-align: left;
+  }
+  
+  /* The input styles remain similar to your existing design; 
+     just ensure they're sized well within the card */
+  .input-text {
+    padding: 10px;
+    font-size: 16px;
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    outline: none;
+    box-sizing: border-box;
+  }
+  
+  .input-text:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
+  
+  /* Buttons: 
+     Adjust margins so they're not all bunched up horizontally */
+  .login-button,
+  .delete-button {
+    margin-top: 15px;
+    margin-right: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  /* Primary action button (Reset, Edit, etc.) */
+  .login-button {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .login-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .login-button:active {
+    background-color: #003f7f;
+  }
+  
+  /* Destructive action button (Delete) */
+  .delete-button {
+    background-color: #ff4c4c;
+    color: white;
+  }
+  
+  .delete-button:hover {
+    background-color: #cc0000;
+  }
+  
+  .delete-button:active {
+    background-color: #990000;
+  }
+
+  .profile-card .success-message {
+    color: #028002;
+    margin-top: 10px;
+  }
+  
+  .profile-card .error-message {
+    color: #FF0000;
+    margin-top: 10px;
+  }
+
+  .toggle-password-button {
+    background-color: #ddd;
+    color: #333;
+    border: none;
+    padding: 5px 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .toggle-password-button:hover {
+    background-color: #bbb;
+  }

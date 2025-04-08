@@ -1,0 +1,76 @@
+import React, { createContext, useState, useEffect, useContext, ReactNode } from 'react';
+
+export interface ThemeContextType {
+  isHighContrast: boolean;
+  setIsHighContrast: React.Dispatch<React.SetStateAction<boolean>>;
+  isDarkMode: boolean;
+  setIsDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+// Create the context with a default value
+export const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+
+export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  // Load initial values from localStorage or default to false
+  const [isHighContrast, setIsHighContrast] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  // Comprehensive dark mode and high contrast application
+  useEffect(() => {
+    // Remove all theme classes first
+    document.documentElement.classList.remove('dark-mode', 'high-contrast', 'high-contrast-dark');
+    document.body.classList.remove('dark-mode', 'high-contrast', 'high-contrast-dark');
+
+    // Apply appropriate classes based on theme state
+    if (isDarkMode && isHighContrast) {
+      document.documentElement.classList.add('high-contrast-dark');
+      document.body.classList.add('high-contrast-dark');
+    } else if (isDarkMode) {
+      document.documentElement.classList.add('dark-mode');
+      document.body.classList.add('dark-mode');
+    } else if (isHighContrast) {
+      document.documentElement.classList.add('high-contrast');
+      document.body.classList.add('high-contrast');
+    }
+
+    // Persist theme preferences
+    // localStorage.setItem('darkMode', isDarkMode.toString());
+    // localStorage.setItem('highContrast', isHighContrast.toString());
+
+    // Make theme state available globally
+    const themeState = {
+      isHighContrast,
+      setIsHighContrast,
+      isDarkMode,
+      setIsDarkMode,
+      forceApplyHighContrastStyles: () => {
+        document.documentElement.classList.add('high-contrast-dark');
+        document.body.classList.add('high-contrast-dark');
+      },
+    };
+
+    // Use type assertion to handle window property
+    (window as Window & { __THEME_STATE__?: typeof themeState }).__THEME_STATE__ = themeState;
+  }, [isDarkMode, isHighContrast]);
+
+  return (
+    <ThemeContext.Provider
+      value={{
+        isHighContrast,
+        setIsHighContrast,
+        isDarkMode,
+        setIsDarkMode,
+      }}>
+      {children}
+    </ThemeContext.Provider>
+  );
+};
+
+// Custom hook to use the theme context
+export const useTheme = () => {
+  const context = useContext(ThemeContext);
+  if (context === undefined) {
+    throw new Error('useTheme must be used within a ThemeProvider');
+  }
+  return context;
+};

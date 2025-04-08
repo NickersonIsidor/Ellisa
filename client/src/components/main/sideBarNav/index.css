@@ -1,0 +1,43 @@
+.sideBarNav {
+  display: flex;
+  flex-direction: column;
+  width: 15%;
+  border-right: dashed;
+  padding: 4% 0 4% 0;
+  align-items: center;
+}
+
+.menu_button:first-child {
+  margin-top: 0;
+}
+
+.menu_button {
+  height: 40px;
+  width: 80%;
+  margin-top: 20px;
+  border-radius: 5px;
+  text-align: center;
+  line-height: 40px;
+  color: cornflowerblue;
+}
+
+.menu_selected {
+  background: #cccccc;
+}
+
+.additional-options {
+  display: flex;
+  flex-direction: column;
+  padding: 4% 0 4% 0;
+  align-items: center;
+}
+
+.message-options {
+  width: max-content;
+}
+
+.message-option-selected {
+  background: #3090e2;
+  color: white;
+  width: 110%;
+}

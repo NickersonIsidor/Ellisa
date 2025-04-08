@@ -1,0 +1,7 @@
+.users_list:last-child {
+  border-bottom: #000000 1px dashed;
+}
+
+.user-card-container {
+  flex: 2;
+}

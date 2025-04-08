@@ -1,0 +1,29 @@
+.game-item {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 15px;
+  background: #f9f9f9;
+}
+
+.game-item p {
+  margin: 5px 0;
+}
+
+.game-item ul {
+  list-style: none;
+  padding: 0;
+  margin: 5px 0;
+}
+
+.game-item li {
+  background: #eef2f3;
+  margin: 3px 0;
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
+.game-item button {
+  margin-top: 10px;
+  padding: 8px 16px;
+  font-size: 14px;
+}

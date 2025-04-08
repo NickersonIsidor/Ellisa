@@ -1,0 +1,42 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 10%;
+  width: 100%;
+  background: #dddddd;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 800;
+}
+
+.logout-button {
+  padding: 12px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.view-profile-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 10px; /* Add spacing from Logout button */
+}
+
+.view-profile-button:hover {
+  background-color: #0056b3;
+}
+
+.view-profile-button:active {
+  background-color: #003f7f;
+}
