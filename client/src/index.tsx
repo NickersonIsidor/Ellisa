@@ -31,12 +31,38 @@ const App = () => {
     };
   }, [socket, serverURL]);
 
+  useEffect(() => {
+    // When component mounts, check if there's a user and apply their preferences
+    if (user) {
+      console.log('📱 Initializing theme from user preferences:', {
+        username: user.username,
+        darkMode: user.darkMode,
+        highContrast: user.highContrast,
+      });
+      setIsDarkMode(user.darkMode ?? false);
+      setIsHighContrast(user.highContrast ?? false);
+    }
+  }, [user, setIsDarkMode, setIsHighContrast]);
+
   const handleUserLogin = (userData: SafeDatabaseUser | null) => {
+    console.log(
+      '🚪 App - User login state changed:',
+      userData
+        ? {
+            username: userData.username,
+            darkMode: userData.darkMode,
+            highContrast: userData.highContrast,
+          }
+        : 'Logged out',
+    );
+
     setUser(userData);
     if (userData) {
+      console.log('🎨 App - Setting theme from user preferences');
       setIsDarkMode(userData.darkMode ?? false);
       setIsHighContrast(userData.highContrast ?? false);
     } else {
+      console.log('🎨 App - Resetting theme to defaults');
       setIsDarkMode(false);
       setIsHighContrast(false);
     }

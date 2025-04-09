@@ -151,6 +151,8 @@ export const updateUser = async (
   updates: Partial<User>,
 ): Promise<UserResponse> => {
   try {
+    console.log('🔍 SERVER SERVICE - Updating user:', { username, updates });
+
     const updatedUser: SafeDatabaseUser | null = await UserModel.findOneAndUpdate(
       { username },
       { $set: updates },
@@ -158,11 +160,19 @@ export const updateUser = async (
     ).select('-password');
 
     if (!updatedUser) {
+      console.log('❌ SERVER SERVICE - User not found for update:', username);
       throw Error('Error updating user');
     }
 
+    console.log('✅ SERVER SERVICE - User updated successfully:', {
+      username: updatedUser.username,
+      darkMode: updatedUser.darkMode,
+      highContrast: updatedUser.highContrast,
+    });
+
     return updatedUser;
   } catch (error) {
+    console.error('❌ SERVER SERVICE - Error in updateUser:', error);
     return { error: `Error occurred when updating user: ${error}` };
   }
 };

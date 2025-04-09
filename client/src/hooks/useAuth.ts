@@ -116,6 +116,8 @@ const useAuth = (authType: 'login' | 'signup') => {
         darkMode: user.darkMode ?? false,
         highContrast: user.highContrast ?? false,
       });
+      setIsDarkMode(user.darkMode ?? false);
+      setIsHighContrast(user.highContrast ?? false);
       navigate('/home');
     } catch (error) {
       setErr((error as Error).message);
@@ -145,11 +147,18 @@ const useAuth = (authType: 'login' | 'signup') => {
         user = await createUser({ username: email, password: passwordToUse });
       }
 
+      console.log('🔍 Setting user in context with preferences:', {
+        darkMode: user.darkMode ?? false,
+        highContrast: user.highContrast ?? false,
+      });
+
       setUser({
         ...user,
         darkMode: user.darkMode ?? false,
         highContrast: user.highContrast ?? false,
       });
+      setIsDarkMode(user.darkMode ?? false);
+      setIsHighContrast(user.highContrast ?? false);
       navigate('/home');
     } catch (error: unknown) {
       // Step 2: Handle MFA-required error
@@ -193,9 +202,16 @@ const useAuth = (authType: 'login' | 'signup') => {
             user = await createUser({ username: email, password: passwordToUse });
           }
 
+          console.log('🔍 Setting user in context with preferences:', {
+            darkMode: user.darkMode ?? false,
+            highContrast: user.highContrast ?? false,
+          });
+
           setIsDarkMode(user.darkMode ?? false);
           setIsHighContrast(user.highContrast ?? false);
           setUser(user);
+          setIsDarkMode(user.darkMode ?? false);
+          setIsHighContrast(user.highContrast ?? false);
           navigate('/home');
         } catch (mfaError) {
           setErr((mfaError as Error).message);

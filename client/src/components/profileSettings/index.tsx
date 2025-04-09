@@ -5,6 +5,7 @@ import useThemeManagement from '../../hooks/useThemeManagement';
 import useProfileSettings from '../../hooks/useProfileSettings';
 import './index.css';
 import useLoginContext from '../../hooks/useLoginContext';
+import VerificationCodeModal from './VerificationCodeModal';
 
 const ProfileSettings = () => {
   // Use the theme context
@@ -74,6 +75,10 @@ const ProfileSettings = () => {
     phoneNumber,
     setPhoneNumber,
     handleEnableMFA,
+
+    isVerificationModalOpen,
+    handleVerificationCodeSubmit,
+    handleVerificationCancel,
   } = useProfileSettings();
 
   const handleDarkModeToggle = () => {
@@ -96,7 +101,16 @@ const ProfileSettings = () => {
 
   return (
     <>
-      <div id='recaptcha-container' />
+      <div
+        id='recaptcha-container'
+        style={{
+          position: 'fixed',
+          bottom: '-10px',
+          left: '-10px',
+          zIndex: -1000,
+          opacity: 0.01, // Nearly invisible but still functional
+        }}
+      />
       <div className='page-container'>
         <div className='profile-card'>
           <h2>Profile</h2>
@@ -307,6 +321,13 @@ const ProfileSettings = () => {
             </label>
           </div>
         </div>
+        {/* Add the verification modal */}
+        <VerificationCodeModal
+          isOpen={isVerificationModalOpen}
+          phoneNumber={phoneNumber}
+          onSubmit={handleVerificationCodeSubmit}
+          onCancel={handleVerificationCancel}
+        />
       </div>
     </>
   );

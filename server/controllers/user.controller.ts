@@ -50,7 +50,7 @@ const userController = (socket: FakeSOSocket) => {
       dateJoined: new Date(),
       biography: requestUser.biography ?? '',
       darkMode: requestUser.darkMode ?? false,
-      highContrast: requestUser.darkMode ?? false,
+      highContrast: requestUser.highContrast ?? false,
     };
 
     try {
@@ -232,7 +232,14 @@ const userController = (socket: FakeSOSocket) => {
     try {
       const { username, darkMode, highContrast } = req.body;
 
+      console.log('🖥️ SERVER - Updating user preferences:', {
+        username,
+        darkMode,
+        highContrast,
+      });
+
       if (!username) {
+        console.log('❌ SERVER - Username is required for preference update');
         res.status(400).send('Username is required');
         return;
       }
@@ -243,12 +250,20 @@ const userController = (socket: FakeSOSocket) => {
       });
 
       if ('error' in updatedUser) {
+        console.error('❌ SERVER - Error updating user preferences:', updatedUser.error);
         throw new Error(updatedUser.error);
       }
+
+      console.log('✅ SERVER - User preferences updated successfully:', {
+        username: updatedUser.username,
+        darkMode: updatedUser.darkMode,
+        highContrast: updatedUser.highContrast,
+      });
 
       socket.emit('userUpdate', { user: updatedUser, type: 'updated' });
       res.status(200).json(updatedUser);
     } catch (error) {
+      console.error('❌ SERVER - Error in updatePreferences:', error);
       res.status(500).send(`Error updating preferences: ${error}`);
     }
   };

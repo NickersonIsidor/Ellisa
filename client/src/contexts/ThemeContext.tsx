@@ -38,6 +38,10 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
 
   // Comprehensive dark mode and high contrast application
   useEffect(() => {
+    console.log('🎨 ThemeContext - Applying theme:', {
+      isDarkMode,
+      isHighContrast,
+    });
     // Remove all theme classes first
     document.documentElement.classList.remove('dark-mode', 'high-contrast', 'high-contrast-dark');
     document.body.classList.remove('dark-mode', 'high-contrast', 'high-contrast-dark');
@@ -46,12 +50,17 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     if (isDarkMode && isHighContrast) {
       document.documentElement.classList.add('high-contrast-dark');
       document.body.classList.add('high-contrast-dark');
+      console.log('🎭 Applied high-contrast-dark theme classes');
     } else if (isDarkMode) {
       document.documentElement.classList.add('dark-mode');
       document.body.classList.add('dark-mode');
+      console.log('🌑 Applied dark-mode theme classes');
     } else if (isHighContrast) {
       document.documentElement.classList.add('high-contrast');
       document.body.classList.add('high-contrast');
+      console.log('👓 Applied high-contrast theme classes');
+    } else {
+      console.log('☀️ Using default light theme (no classes)');
     }
 
     // Persist theme preferences in localStorage as backup
