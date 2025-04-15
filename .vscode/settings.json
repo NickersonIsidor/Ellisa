@@ -1,5 +1,0 @@
-{
-  "jest.rootPath": "./server",
-  "jest.jestCommandLine": "npx jest",
-  "jest.runMode": "on-demand"
-}
