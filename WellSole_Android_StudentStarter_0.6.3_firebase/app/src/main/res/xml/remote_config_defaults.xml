@@ -1,0 +1,5 @@
+
+<defaultsMap>
+  <entry><key>heatmap_sigma</key><value>0.16</value></entry>
+  <entry><key>heatmap_alpha</key><value>0.40</value></entry>
+</defaultsMap>

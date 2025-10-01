@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "785045562099",
+    "project_id": "wellsol-a2b56",
+    "storage_bucket": "wellsol-a2b56.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:785045562099:android:4c6c7ceafd29b203090d86",
+        "android_client_info": {
+          "package_name": "com.wellsole.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBTG8ks0qA5zDlufwjreH08cyR4jbFUjE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
